@@ -10,9 +10,7 @@ interface listProps {
 
 
 export default function BudgetList() {
-    const list: listProps[] = [
-    
-    ]
+    const list: listProps[] = []
 
     const [allList, setAllList] = useState<listProps[]>(list)
 
