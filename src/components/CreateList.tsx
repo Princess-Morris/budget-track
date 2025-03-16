@@ -1,7 +1,7 @@
 interface formProps{
     category: string;
     description: string;
-    amount: string;
+    amount: number;
     dateTime: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     handleSubmit: (e: any) => void
