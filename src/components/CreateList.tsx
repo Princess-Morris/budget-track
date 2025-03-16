@@ -10,10 +10,6 @@ interface formProps{
 export default function CreateList({ category, description, amount, dateTime, handleChange, handleSubmit}: formProps) {
 
 
-    // const handleSubmit = (e: any) => {
-    //     console.log("adding")
-    // }
-
     return (
         <form onSubmit={handleSubmit}>
             <label>Category: </label>
