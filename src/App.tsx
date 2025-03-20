@@ -1,9 +1,10 @@
+import BudgetLists from './components/budget/BudgetLists';
+
 import './App.css';
-import BudgetLists from './components/BudgetLists';
 
 function App() {
   return (
-    <div>
+    <div className="app">
     <BudgetLists />
     </div>
   );

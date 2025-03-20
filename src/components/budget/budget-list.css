@@ -1,0 +1,34 @@
+.form-and-list{
+    display: flex;
+    gap: 40px;
+}
+
+.form-wrapper{
+    width: 100%;
+  max-width: 500px;
+  height: 570px;
+}
+
+.list-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 8px;
+
+}
+
+.list{
+    color: #808080;
+    background-color: #f2f2f2;
+    border: 3px solid #f2f2f2;
+    border-radius: 8px;
+    padding: 40px;
+    /* display: flex; */
+    width: 40%;
+    max-height: 250px;
+}
+
+h3{
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
