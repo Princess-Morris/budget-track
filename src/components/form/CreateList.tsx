@@ -1,6 +1,7 @@
 import "./create-list.css"
 
 interface formProps {
+    id: string;
     category: string;
     description: string;
     amount: number;
@@ -9,7 +10,7 @@ interface formProps {
     handleSubmit: (e: React.FormEvent) => void
 }
 
-export default function CreateList({ category, description, amount, dateTime, handleChange, handleSubmit }: formProps) {
+export default function CreateList({ id, category, description, amount, dateTime, handleChange, handleSubmit }: formProps) {
 
 
     return (
@@ -71,7 +72,7 @@ export default function CreateList({ category, description, amount, dateTime, ha
             </div>
 
 
-            <button type="submit">{category ? "update Item" : "Add To List"}</button>
+            <button type="submit">{id ? "update Item" : "Add To List"}</button>
 
         </form>
     )

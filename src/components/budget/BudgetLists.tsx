@@ -19,7 +19,7 @@ export default function BudgetList() {
             category: "Beddings",
             description: "got 3 heavy blankets",
             amount: 3000,
-            dateTime: "2025-11-03",
+            dateTime: "2025-11-03"
         },
 
         {
@@ -49,6 +49,8 @@ export default function BudgetList() {
         dateTime: ""
     })
 
+    const [changeColor, setChangeColor] = useState<string | undefined>(undefined);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setFormData((prev) => ({
@@ -58,11 +60,15 @@ export default function BudgetList() {
     }
 
     const handleSubmit = (e: any) => {
-        // console.log("adding")
         e.preventDefault()
-        if (formData.id){
-            setAllList(prev => prev.map((item) => item.id === formData.id ? formData : item)) 
-            console.log(formData.id)
+
+        if (formData.description === "" && formData.amount === 0) return
+
+        if (formData.id) {
+            setAllList(prev => prev.map((item) => item.id === formData.id ? formData : item))
+            // console.log(formData.id)
+            setChangeColor(undefined)
+
         } else {
             const newItem = {
                 ...formData,
@@ -86,15 +92,16 @@ export default function BudgetList() {
         // console.log("I have deleted this post")
     }
 
-    const handleEdit = (list: any) => {
-        // console.log("About to update an item")
+    const handleEdit = (list: listProps, id: string | undefined) => {
         setFormData(list)
+        setChangeColor(id)
     }
 
     return (
         <div className="form-and-list">
             <div className="form-wrapper">
                 <CreateList
+                    id={formData.id}
                     category={formData.category}
                     description={formData.description}
                     amount={formData.amount}
@@ -106,7 +113,7 @@ export default function BudgetList() {
 
             <div className="list-wrapper">
                 {allList.map((list, key) => (
-                    <div className="list" key={key}>
+                    <div className={`list ${changeColor === list.id && "update-item"}`} key={key}>
                         <h3>Category: <span className="text">{list.category} </span> </h3>
                         <h3>Description: <span className="text">{list.description} </span> </h3>
                         <h3>Amount($): <span className="text">{list.amount} </span> </h3>
@@ -117,7 +124,7 @@ export default function BudgetList() {
                             x
                         </div>
                         <div
-                        onClick={() => handleEdit(list)}
+                            onClick={() => handleEdit(list, list.id)}
                             className="edit-wrapper"
                         >
                             !
