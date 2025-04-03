@@ -7,7 +7,7 @@ interface formProps {
     amount: number;
     dateTime: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
-    handleSubmit: (e: React.FormEvent) => void
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 export default function CreateList({ id, category, description, amount, dateTime, handleChange, handleSubmit }: formProps) {
@@ -34,7 +34,7 @@ export default function CreateList({ id, category, description, amount, dateTime
             <div className="input">
                 <label>Amount: </label>
                 <input
-                    type="text"
+                    type="number"
                     name="amount"
                     value={amount}
                     onChange={handleChange}
@@ -58,6 +58,7 @@ export default function CreateList({ id, category, description, amount, dateTime
                     name="category"
                     onChange={handleChange}
                 >
+                    <option value="">Choose Category</option>
                     <option value="Groceries">Groceries</option>
                     <option value="Laundry">Laundry</option>
                     <option value="Beddings">Beddings</option>

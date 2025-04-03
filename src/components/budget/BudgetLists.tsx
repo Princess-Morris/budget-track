@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import CreateList from "../form/CreateList";
 
 import './budget-list.css'
 
 interface listProps {
     id: string;
-    category: "Groceries" | "Laundry" | "Beddings" | "Outfits" | "Tfare" | "Giftings" | "Vacation" | "Outings" | "Repairs";
+    category: "" | "Groceries" | "Laundry" | "Beddings" | "Outfits" | "Tfare" | "Giftings" | "Vacation" | "Outings" | "Repairs";
     description: string;
     amount: number;
     dateTime: string;
@@ -43,13 +43,14 @@ export default function BudgetList() {
 
     const [formData, setFormData] = useState<listProps>({
         id: "",
-        category: "Groceries",
+        category: "",
         description: "",
         amount: 0,
         dateTime: ""
     })
 
     const [changeColor, setChangeColor] = useState<string | undefined>(undefined);
+    const [updateText, setUpdateText] = useState<string | undefined>(undefined);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -59,15 +60,17 @@ export default function BudgetList() {
         }))
     }
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (formData.description === "" && formData.amount === 0) return
+        if (formData.category === "" && formData.amount === 0) return
 
         if (formData.id) {
             setAllList(prev => prev.map((item) => item.id === formData.id ? formData : item))
             // console.log(formData.id)
+
             setChangeColor(undefined)
+            setUpdateText(formData.id)
 
         } else {
             const newItem = {
@@ -75,21 +78,20 @@ export default function BudgetList() {
                 id: Date.now().toString()
             }
             setAllList(prev => [...prev, newItem])
+            // console.log(newItem.id)
         }
-        // setAllList([...allList, formData])
+
         setFormData({
             id: "",
-            category: 'Groceries',
+            category: "",
             description: "",
             amount: 0,
             dateTime: ""
         })
     }
 
-    const handleDelete = (id: any) => {
-        // console.log("i want to delete this post")
+    const handleDelete = (id: string) => {
         setAllList(allList.filter((list) => (list.id !== id)))
-        // console.log("I have deleted this post")
     }
 
     const handleEdit = (list: listProps, id: string | undefined) => {
@@ -125,10 +127,13 @@ export default function BudgetList() {
                         </div>
                         <div
                             onClick={() => handleEdit(list, list.id)}
-                            className="edit-wrapper"
+                            className="edit-icon-wrapper"
                         >
                             !
                         </div>
+                        {changeColor === list.id && <p className="updating-text">Updating...</p> }
+                        {/* <p className="updated-text">{updateText}</p> */}
+                        {updateText === list.id &&  <p className="updated-text">Updated</p> }
                     </div>
                 ))}
             </div>

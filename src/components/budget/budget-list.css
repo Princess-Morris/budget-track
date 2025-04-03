@@ -32,7 +32,7 @@
 .list{
     color: #808080;
     background-color: #f2f2f2;
-    border: 3px solid #f2f2f2;
+    /* border: 3px solid #f2f2f2; */
     border-radius: 8px;
     padding: 40px;
     /* display: flex; */
@@ -40,6 +40,7 @@
     max-height: 250px;
     position: relative;
 }
+
 
 .update-item{
   background-color: #ccc;
@@ -67,7 +68,7 @@ h3{
   background-color: #f5f8fd;
   /* border: 1px solid #ccc; */
   padding: 18px;
-
+  transform: 3s ease-out;
 }
 
 .delete-wrapper:hover{
@@ -80,7 +81,7 @@ h3{
   height: 100%;
 } */
 
-.edit-wrapper{
+.edit-icon-wrapper{
   /* color: blue; */
   font-weight: bolder;
   position: absolute;
@@ -96,9 +97,22 @@ h3{
   justify-content: center;
   align-items: center;
   font-size: 20px;
+  transform: 3s ease-out;
 }
 
 .edit-wrapper:hover{
    background-color: #ccc;
    color: blue;
+}
+.updating-text, .updated-text{
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  background-color: #f5f8fd;
+  padding: 6px;
+  border-radius: 50px;;
+}
+
+.updated-text{
+  color: green;
 }
