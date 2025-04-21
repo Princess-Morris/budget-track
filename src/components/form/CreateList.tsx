@@ -1,3 +1,4 @@
+import Spinner from "../spinner";
 import "./create-list.css"
 
 interface formProps {
@@ -6,17 +7,20 @@ interface formProps {
     description: string;
     amount: number;
     dateTime: string;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    disabled: boolean;
+    error: string
 }
 
-export default function CreateList({ id, category, description, amount, dateTime, handleChange, handleSubmit }: formProps) {
+export default function CreateList({ id, category, description, amount, dateTime, handleChange, handleSubmit, disabled, error }: formProps) {
 
 
     return (
         <form className="form"
             onSubmit={handleSubmit}
         >
+            <p className="error">{error}</p>
             <div className="input">
                 <label>Description: </label>
 
@@ -59,10 +63,13 @@ export default function CreateList({ id, category, description, amount, dateTime
                     onChange={handleChange}
                 >
                     <option value="">Choose Category</option>
+                    <option value="Food">Food</option>
                     <option value="Groceries">Groceries</option>
                     <option value="Laundry">Laundry</option>
                     <option value="Beddings">Beddings</option>
                     <option value="Outfits">Outfits</option>
+                    <option value="Home Items">Home Items</option>
+                    <option value="Gadgets" >Gadgets</option>
                     <option value="Tfare">Tfare</option>
                     <option value="Giftings">Giftings</option>
                     <option value="Vacation">Vacation</option>
@@ -73,7 +80,11 @@ export default function CreateList({ id, category, description, amount, dateTime
             </div>
 
 
-            <button type="submit">{id ? "update Item" : "Add To List"}</button>
+            <button 
+            disabled={disabled} 
+            type="submit">
+                {disabled && <Spinner />}
+                {id ? "update Item" : "Add To List"}</button>
 
         </form>
     )

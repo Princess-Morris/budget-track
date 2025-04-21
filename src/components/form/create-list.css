@@ -47,3 +47,8 @@ button{
     font-size: 18px;
     word-wrap: break-word;
 }
+
+.error{
+    text-align: center;
+    color: red;
+}
