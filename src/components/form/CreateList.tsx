@@ -68,7 +68,7 @@ export default function CreateList({ id, category, description, amount, dateTime
                     <option value="Laundry">Laundry</option>
                     <option value="Beddings">Beddings</option>
                     <option value="Outfits">Outfits</option>
-                    <option value="Home Items">Home Items</option>
+                    <option value="Household">Household</option>
                     <option value="Gadgets" >Gadgets</option>
                     <option value="Tfare">Tfare</option>
                     <option value="Giftings">Giftings</option>

@@ -3,9 +3,9 @@ import CreateList from "../form/CreateList";
 
 import './budget-list.css'
 
-interface listProps {
+export interface listProps {
     id: string;
-    category: "" | "Food" | "Groceries" | "Laundry" | "Beddings" | "Outfits" | "Home Items" | "Gadgets" | "Tfare" | "Giftings" | "Vacation" | "Outings" | "Repairs";
+    category: "" | "Food" | "Groceries" | "Laundry" | "Beddings" | "Outfits" | "Household" | "Gadgets" | "Tfare" | "Giftings" | "Vacation" | "Outings" | "Repairs";
     description: string;
     amount: number;
     dateTime: string;
@@ -34,9 +34,12 @@ export default function BudgetList() {
         dateTime: ""
     })
 
+    // const timeUpdates = ["yesterday", "today", "tomorrow", "lastweek"]
+    const [listOfTimeUpdated, setListOfTimeUpdated] = useState<string[]>([]);
+
     const [changeCardColor, setChangeCardColor] = useState<string | undefined>(undefined);
     const [updatedText, setUpdatedText] = useState<string | undefined>(undefined);
-    const [timeUpdated, setTimeUpdated] = useState<string | undefined>(undefined);
+    const [timeUpdated, setTimeUpdated] = useState<string | undefined>("today");
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
@@ -111,6 +114,8 @@ export default function BudgetList() {
 
                 setChangeCardColor(undefined)
                 setUpdatedText(formData.id)
+                // setTimeUpdated(formData.id)
+                setListOfTimeUpdated((prev: string[]) => ([...prev, formData.id]))
 
             } else {
                 response = await fetch(`${api}/add`, {
@@ -187,9 +192,9 @@ export default function BudgetList() {
         }
 
 
-        if (updatedText === id) {
-            setUpdatedText(undefined)
-        }
+        // if (listOfTimeUpdated.includes(id)) {
+        //     setListOfTimeUpdated((prev) => ([]))
+        // }
     }
 
     return (
@@ -221,7 +226,6 @@ export default function BudgetList() {
                         <div
                             onClick={() => handleDelete(list.id)}
                             className="delete-wrapper"
-                            style={{display: deleteText === list.id ? "none" : "" }}
                             >
                            {deleteText === list.id  ? "Deleting" : "x"} 
                         </div>
@@ -232,10 +236,9 @@ export default function BudgetList() {
                             !
                         </div>
                         {changeCardColor === list.id && <p className="updating-text">Updating...</p>}
-                        {updatedText === list.id && <p className="updated-text">Updated</p>}
+                        {/* {updatedText === list.id && <p className="updated-text">Updated {timeUpdated}</p>} */}
+                        {listOfTimeUpdated.includes(list.id) && <p className="updated-text">Updated {timeUpdated}</p>}
 
-
-                        {/* {formData.dateTime.toString() === today && <p className="today">today</p> } */}
                     </div>
                 ))}
             </div>

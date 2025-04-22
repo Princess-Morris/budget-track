@@ -27,6 +27,7 @@
   width: 400px;
   position: relative;
   /* background-color: rebeccapurple; */
+  height: 300px;
 }
 
 
@@ -56,6 +57,12 @@
 h3 {
   margin-bottom: 20px;
   margin-right: 10px;
+}
+
+.text{
+  color: palevioletred;
+  font-size: 18px;
+  word-wrap: break-word;
 }
 
 .delete-wrapper {
@@ -114,19 +121,19 @@ h3 {
 .updating-text,
 .updated-text {
   position: absolute;
-  top: 8px;
   left: 10px;
-  background-color: #f5f8fd;
-  padding: 6px;
-  border-radius: 15px;
-  font-size: small;
+  font-size: smaller;
 }
 
 .updated-text {
   color: green;
+  top: 7px;
 }
 
-.today {
-  color: black;
-  font-size: large;
+.updating-text{
+  background-color: #f5f8fd;
+  border-radius: 15px;
+  padding: 4px;
+  top: 8px;
 }
+

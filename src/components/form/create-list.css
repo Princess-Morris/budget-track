@@ -42,11 +42,7 @@ button{
     height: 100px;
 }
 
-.text{
-    color: palevioletred;
-    font-size: 18px;
-    word-wrap: break-word;
-}
+
 
 .error{
     text-align: center;

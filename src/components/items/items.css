@@ -1,0 +1,101 @@
+h3 {
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.text {
+    color: palevioletred;
+    font-size: 18px;
+    word-wrap: break-word;
+}
+
+
+.list {
+    color: #808080;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    padding: 40px;
+    width: 400px;
+    position: relative;
+    /* background-color: rebeccapurple; */
+}
+
+.delete-wrapper {
+    /* color: blue; */
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 7px;
+    height: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background-color: #f5f8fd;
+    /* border: 1px solid #ccc; */
+    padding: 18px;
+    transform: 3s ease-out;
+}
+
+.delete-wrapper:hover {
+    background-color: #ccc;
+    color: red;
+}
+
+.update-item {
+    background-color: #ccc;
+    /* color: #fff; */
+}
+
+.edit-icon-wrapper {
+    /* color: blue; */
+    font-weight: bolder;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    cursor: pointer;
+    width: 7px;
+    height: 7px;
+    padding: 18px;
+    background-color: #f5f8fd;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    transform: 3s ease-out;
+}
+
+.edit-wrapper:hover {
+    background-color: #ccc;
+    color: blue;
+}
+
+.updating-text,
+.updated-text {
+  position: absolute;
+  left: 10px;
+  font-size: smaller;
+}
+
+.updated-text {
+  color: green;
+  top: 7px;
+}
+
+.updating-text{
+  background-color: #f5f8fd;
+  border-radius: 15px;
+  padding: 4px;
+  top: 8px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .list {
+        width: 100%;
+        max-width: 400px;
+    }
+}
