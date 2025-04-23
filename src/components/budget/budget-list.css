@@ -35,9 +35,11 @@
 
 .top-wrapper{
   /* background-color: aquamarine; */
+  display: flex;
+  /* align-items: center; */
 }
 
-
+/* will move this style  */
 .input-search{
   border-radius: 8px;
   padding: 10px;
@@ -54,5 +56,21 @@
 }
 
 
+.plus-sign{
+  /* font-size: x-large; */
+  /* padding: 3px; */
+  margin-right: 15px;
+  width: 50px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: gray;
+  height: 37px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-
+.plus-sign:hover{
+  background-color: thistle;
+}

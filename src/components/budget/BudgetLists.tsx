@@ -196,6 +196,7 @@ export default function BudgetList() {
     }
 
     const [searchInput, setSearchInput] = useState<string>("")
+    const [showForm, setShowForm] = useState<boolean>(false);
 
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,10 +220,20 @@ export default function BudgetList() {
     //     console.log(allList)
     // }
 
+    const handleShowForm = () => {
+        setShowForm(!showForm)
+    }
+
 
     return (
         <>
             <div className="top-wrapper">
+               
+                <button 
+                className="plus-sign"
+                onClick={handleShowForm}>
+                  {!showForm ? "+" : "All"}
+                </button>
                 <input
                     className="input-search"
                     type="text"
@@ -234,7 +245,9 @@ export default function BudgetList() {
 
             </div>
             <div className="form-and-list">
-                <div className="form-wrapper">
+                {
+                    showForm ? (
+                        <div className="form-wrapper">
                     <CreateList
                         id={formData.id}
                         category={formData.category}
@@ -248,6 +261,9 @@ export default function BudgetList() {
                     />
 
                 </div>
+                    ) : null
+                }
+                
 
                 <div className="list-wrapper">
                     {allList.map((list) => (
