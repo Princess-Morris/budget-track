@@ -53,6 +53,7 @@ export default function BudgetList() {
     }, [])
 
 
+
     const fetchItems = async () => {
         try {
             // console.log("about to fetch");
@@ -113,7 +114,7 @@ export default function BudgetList() {
                 })
 
                 setChangeCardColor(undefined)
-                setListOfTimeUpdated((prev: string[]) => ([...prev, formData.id]));
+                setListOfTimeUpdated((prev: string[]) => ([formData.id, ...prev]));
 
 
                 // setHideUpdatedText(!hideUpdatedText)
@@ -194,52 +195,76 @@ export default function BudgetList() {
 
     }
 
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-          e.preventDefault();
-          console.log("changing")
+    const [searchInput, setSearchInput] = useState<string>("")
+
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        setSearchInput(e.target.value);
+        console.log(e.target.value);
+
+        if(e.target.value === ""){
+            setAllList(allList)
+        }
+
+        setAllList(allList.filter((item) => item.description.includes(e.target.value)));
+        console.log(allList)
+
+        // handleSearch(e.target.value)
+
     }
+
+    // const handleSearch = (e: any) => {
+    //     setAllList(allList.filter((item) => item.description.includes(e.target.value)));
+    //     console.log(allList)
+    // }
+
 
     return (
         <>
-        <div className="search-wrapper">
-            <input 
-            className="input-search"
-            type="text" 
-            placeholder="Search with description..."
-            onChange={handleSearch}
-            />
-        </div>
-        <div className="form-and-list">
-            <div className="form-wrapper">
-                <CreateList
-                    id={formData.id}
-                    category={formData.category}
-                    description={formData.description}
-                    amount={formData.amount}
-                    dateTime={formData.dateTime}
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                    disabled={loading}
-                    error={error}
+            <div className="top-wrapper">
+                <input
+                    className="input-search"
+                    type="text"
+                    name="search"
+                    placeholder="Search with description..."
+                    value={searchInput}
+                    onChange={handleSearchChange}
                 />
 
             </div>
-
-            <div className="list-wrapper">
-                {allList.map((list) => (
-                    <Item
-                        list={list}
-                        changeCardColor={changeCardColor}
-                        handleDelete={handleDelete}
-                        deleteText={deleteText}
-                        handleEdit={handleEdit}
-                        listOfTimeUpdated={listOfTimeUpdated}
-                        timeUpdated={timeUpdated}
+            <div className="form-and-list">
+                <div className="form-wrapper">
+                    <CreateList
+                        id={formData.id}
+                        category={formData.category}
+                        description={formData.description}
+                        amount={formData.amount}
+                        dateTime={formData.dateTime}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        disabled={loading}
+                        error={error}
                     />
-                ))}
-            </div>
 
-        </div>
-        </> 
+                </div>
+
+                <div className="list-wrapper">
+                    {allList.map((list) => (
+                        <Item
+                            key={list.id}
+                            list={list}
+                            changeCardColor={changeCardColor}
+                            handleDelete={handleDelete}
+                            deleteText={deleteText}
+                            handleEdit={handleEdit}
+                            listOfTimeUpdated={listOfTimeUpdated}
+                            timeUpdated={timeUpdated}
+                        />
+                    ))}
+                </div>
+
+            </div>
+        </>
     )
 }

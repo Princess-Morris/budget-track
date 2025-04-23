@@ -25,10 +25,10 @@ export default function Item({
                 <div
                     key={list.id}
                     className={`list ${changeCardColor === list.id && "update-item"}`}>
-                    <h3>Category: <span className="text">{list.category} </span> </h3>
-                    <h3>Description: <span className="text">{list.description} </span> </h3>
-                    <h3>Amount($): <span className="text">{list.amount} </span> </h3>
-                    <h3>Date & Time: <span className="text">{list.dateTime} </span> </h3>
+                    <h4>Category: <span className="text">{list.category} </span> </h4>
+                    <h4>Description: <span className="text">{list.description} </span> </h4>
+                    <h4>Amount($): <span className="text">{list.amount} </span> </h4>
+                    <h4>Date & Time: <span className="text">{list.dateTime} </span> </h4>
                     <div
                         onClick={() => handleDelete(list.id)}
                         className="delete-wrapper"

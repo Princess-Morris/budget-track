@@ -10,7 +10,7 @@ interface formProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     disabled: boolean;
-    error: string
+    error: string;
 }
 
 export default function CreateList({ id, category, description, amount, dateTime, handleChange, handleSubmit, disabled, error }: formProps) {
