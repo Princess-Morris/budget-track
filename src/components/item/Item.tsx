@@ -1,26 +1,27 @@
 import { listProps } from "../budget/BudgetLists";
-import "./items.css";
+import "./item.css";
 
 interface ItemsProps {
-    allList: listProps[];
+    list: listProps
     changeCardColor: string | undefined;
     handleDelete: (id: string) => void;
     deleteText: string | undefined;
     handleEdit: (list: listProps, id: string) => void;
-    updatedText: string | undefined;
+    listOfTimeUpdated: string[];
+    timeUpdated: string | undefined;
 }
 
-export default function Items({ 
-    allList, 
+export default function Item({ 
+     list,
     changeCardColor, 
     handleDelete,
     deleteText,
     handleEdit,
-    updatedText
+    listOfTimeUpdated,
+    timeUpdated 
+
 }: ItemsProps) {
     return (
-        <>
-            {allList.map((list) => (
                 <div
                     key={list.id}
                     className={`list ${changeCardColor === list.id && "update-item"}`}>
@@ -41,13 +42,8 @@ export default function Items({
                     >
                         !
                     </div>
-                    {changeCardColor === list.id && <p className="updating-text">Updating...</p>}
-                    {updatedText === list.id && <p className="updated-text">Updated</p>}
+                    {changeCardColor === list.id ? <p className="updating-text">Updating...</p> : listOfTimeUpdated.includes(list.id) && <p className="updated-text">Updated {timeUpdated} </p>}
 
-
-                    {/* {formData.dateTime.toString() === today && <p className="today">today</p> } */}
                 </div>
-            ))}
-        </>
     )
 }

@@ -18,6 +18,7 @@ h3 {
     width: 400px;
     position: relative;
     /* background-color: rebeccapurple; */
+    height: 300px;
 }
 
 .delete-wrapper {
@@ -75,21 +76,21 @@ h3 {
 
 .updating-text,
 .updated-text {
-  position: absolute;
-  left: 10px;
-  font-size: smaller;
+    position: absolute;
+    left: 10px;
+    font-size: smaller;
 }
 
 .updated-text {
-  color: green;
-  top: 7px;
+    color: green;
+    top: 7px;
 }
 
-.updating-text{
-  background-color: #f5f8fd;
-  border-radius: 15px;
-  padding: 4px;
-  top: 8px;
+.updating-text {
+    background-color: #f5f8fd;
+    border-radius: 15px;
+    padding: 4px;
+    top: 8px;
 }
 
 

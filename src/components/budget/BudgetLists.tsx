@@ -1,7 +1,8 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, MouseEventHandler, useEffect, useState } from "react";
 import CreateList from "../form/CreateList";
 
 import './budget-list.css'
+import Item from "../item/Item";
 
 export interface listProps {
     id: string;
@@ -34,12 +35,11 @@ export default function BudgetList() {
         dateTime: ""
     })
 
-    // const timeUpdates = ["yesterday", "today", "tomorrow", "lastweek"]
     const [listOfTimeUpdated, setListOfTimeUpdated] = useState<string[]>([]);
 
     const [changeCardColor, setChangeCardColor] = useState<string | undefined>(undefined);
-    const [updatedText, setUpdatedText] = useState<string | undefined>(undefined);
     const [timeUpdated, setTimeUpdated] = useState<string | undefined>("today");
+
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
@@ -53,7 +53,7 @@ export default function BudgetList() {
     }, [])
 
 
-    const fetchItems = async () => { 
+    const fetchItems = async () => {
         try {
             // console.log("about to fetch");
             const res = await fetch(`${api}/all`);
@@ -69,7 +69,7 @@ export default function BudgetList() {
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setFormData((prev) =>  ({
+        setFormData((prev) => ({
             ...prev,
             [e.target.name]: e.target.value
         }))
@@ -77,7 +77,7 @@ export default function BudgetList() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        
+
         if (formData.category === "" && formData.amount === 0) {
             setError("Please fill out category and amount");
             setLoading(false);
@@ -113,9 +113,10 @@ export default function BudgetList() {
                 })
 
                 setChangeCardColor(undefined)
-                setUpdatedText(formData.id)
-                // setTimeUpdated(formData.id)
-                setListOfTimeUpdated((prev: string[]) => ([...prev, formData.id]))
+                setListOfTimeUpdated((prev: string[]) => ([...prev, formData.id]));
+
+
+                // setHideUpdatedText(!hideUpdatedText)
 
             } else {
                 response = await fetch(`${api}/add`, {
@@ -157,11 +158,11 @@ export default function BudgetList() {
         setDeleteText(id)
 
         try {
-          const response =  await fetch(`${api}/delete/${id}`, {
+            const response = await fetch(`${api}/delete/${id}`, {
                 method: "DELETE"
             })
 
-            if(!response.ok){
+            if (!response.ok) {
                 throw new Error("Failed to delete item")
             }
             setAllList(prev => prev.filter((list) => (list.id !== id)))
@@ -170,15 +171,15 @@ export default function BudgetList() {
         } catch (err) {
             setError("Error deleting item. Please try again")
             console.error("Error deleting item: ", err)
-        } finally{
+        } finally {
             setDeleteText(undefined)
         }
     }
 
-    const handleEdit = (list: listProps, id: string | undefined) => {
+    const handleEdit = (list: listProps, id: string) => {
 
-        setChangeCardColor(id)
-        setFormData(list)
+        setChangeCardColor(id);
+        setFormData(list);
 
         if (changeCardColor === id) {
             setChangeCardColor(undefined)
@@ -191,13 +192,23 @@ export default function BudgetList() {
             })
         }
 
+    }
 
-        // if (listOfTimeUpdated.includes(id)) {
-        //     setListOfTimeUpdated((prev) => ([]))
-        // }
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+          e.preventDefault();
+          console.log("changing")
     }
 
     return (
+        <>
+        <div className="search-wrapper">
+            <input 
+            className="input-search"
+            type="text" 
+            placeholder="Search with description..."
+            onChange={handleSearch}
+            />
+        </div>
         <div className="form-and-list">
             <div className="form-wrapper">
                 <CreateList
@@ -216,33 +227,19 @@ export default function BudgetList() {
 
             <div className="list-wrapper">
                 {allList.map((list) => (
-                    <div
-                        key={list.id}
-                        className={`list ${changeCardColor === list.id && "update-item"}`}>
-                        <h3>Category: <span className="text">{list.category} </span> </h3>
-                        <h3>Description: <span className="text">{list.description} </span> </h3>
-                        <h3>Amount($): <span className="text">{list.amount} </span> </h3>
-                        <h3>Date & Time: <span className="text">{list.dateTime} </span> </h3>
-                        <div
-                            onClick={() => handleDelete(list.id)}
-                            className="delete-wrapper"
-                            >
-                           {deleteText === list.id  ? "Deleting" : "x"} 
-                        </div>
-                        <div
-                            onClick={() => handleEdit(list, list.id)}
-                            className="edit-icon-wrapper"
-                        >
-                            !
-                        </div>
-                        {changeCardColor === list.id && <p className="updating-text">Updating...</p>}
-                        {/* {updatedText === list.id && <p className="updated-text">Updated {timeUpdated}</p>} */}
-                        {listOfTimeUpdated.includes(list.id) && <p className="updated-text">Updated {timeUpdated}</p>}
-
-                    </div>
+                    <Item
+                        list={list}
+                        changeCardColor={changeCardColor}
+                        handleDelete={handleDelete}
+                        deleteText={deleteText}
+                        handleEdit={handleEdit}
+                        listOfTimeUpdated={listOfTimeUpdated}
+                        timeUpdated={timeUpdated}
+                    />
                 ))}
             </div>
 
         </div>
+        </> 
     )
 }
