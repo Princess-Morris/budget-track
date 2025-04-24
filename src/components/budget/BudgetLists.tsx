@@ -178,7 +178,10 @@ export default function BudgetList() {
     }
 
     const handleEdit = (list: listProps, id: string) => {
-
+        
+        if (!showForm){
+            setShowForm(true)
+        }
         setChangeCardColor(id);
         setFormData(list);
 
