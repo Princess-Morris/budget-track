@@ -20,7 +20,7 @@ export default function CreateList({ id, category, description, amount, dateTime
         <form className="form"
             onSubmit={handleSubmit}
         >
-            <p className="error">{error}</p>
+            {error && <p className="error"> {error}</p>}
             <div className="input">
                 <label>Description: </label>
 

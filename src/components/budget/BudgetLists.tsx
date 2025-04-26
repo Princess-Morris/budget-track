@@ -25,7 +25,8 @@ export default function BudgetList() {
 
     ]
 
-    const [allList, setAllList] = useState<listProps[]>(list)
+    const [allList, setAllList] = useState<listProps[]>([]);
+    const [originalList, setOriginalList] = useState<listProps[]>([]);
 
     const [formData, setFormData] = useState<listProps>({
         id: "",
@@ -60,6 +61,7 @@ export default function BudgetList() {
             const res = await fetch(`${api}/all`);
             const items = await res.json();
             setAllList(items)
+            setOriginalList(items)
             // console.log(items)
             // console.log("fetched.......")
         } catch (err) {
@@ -134,7 +136,8 @@ export default function BudgetList() {
 
                 const newItem = await response.json()
 
-                setAllList(prev => ([...prev, newItem]))
+                // setAllList(prev => ([newItem, ...prev]))
+                setAllList([newItem, ...originalList])
 
                 // await fetchItems()
                 setFormData({
@@ -150,7 +153,7 @@ export default function BudgetList() {
                 ? err.message
                 : "Network Error"
             )
-        } finally {
+        } finally{
             setLoading(false)
         }
     }
@@ -163,7 +166,7 @@ export default function BudgetList() {
                 method: "DELETE"
             })
 
-            if (!response.ok) {
+            if (!response.ok) { 
                 throw new Error("Failed to delete item")
             }
             setAllList(prev => prev.filter((list) => (list.id !== id)))
@@ -178,8 +181,8 @@ export default function BudgetList() {
     }
 
     const handleEdit = (list: listProps, id: string) => {
-        
-        if (!showForm){
+
+        if (!showForm) {
             setShowForm(true)
         }
         setChangeCardColor(id);
@@ -204,38 +207,32 @@ export default function BudgetList() {
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        setSearchInput(e.target.value);
-        console.log(e.target.value);
+        const value = e.target.value
+        setSearchInput(value);
 
-        if(e.target.value === ""){
-            setAllList(allList)
+        if (e.target.value === "") {
+            setAllList(originalList)
+        } else {
+            const filtered = originalList.filter((item) => item.description.toLowerCase().includes(value.toLowerCase()))
+            setAllList(filtered)
         }
-
-        setAllList(allList.filter((item) => item.description.includes(e.target.value)));
-        console.log(allList)
-
-        // handleSearch(e.target.value)
 
     }
 
-    // const handleSearch = (e: any) => {
-    //     setAllList(allList.filter((item) => item.description.includes(e.target.value)));
-    //     console.log(allList)
-    // }
-
     const handleShowForm = () => {
         setShowForm(!showForm)
+        setChangeCardColor(undefined)
     }
 
 
     return (
         <>
             <div className="top-wrapper">
-               
-                <button 
-                className="plus-sign"
-                onClick={handleShowForm}>
-                  {!showForm ? "+" : "All"}
+
+                <button
+                    className="plus-sign"
+                    onClick={handleShowForm}>
+                    {!showForm ? "+" : "All"}
                 </button>
                 <input
                     className="input-search"
@@ -251,22 +248,22 @@ export default function BudgetList() {
                 {
                     showForm ? (
                         <div className="form-wrapper">
-                    <CreateList
-                        id={formData.id}
-                        category={formData.category}
-                        description={formData.description}
-                        amount={formData.amount}
-                        dateTime={formData.dateTime}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
-                        disabled={loading}
-                        error={error}
-                    />
+                            <CreateList
+                                id={formData.id}
+                                category={formData.category}
+                                description={formData.description}
+                                amount={formData.amount}
+                                dateTime={formData.dateTime}
+                                handleChange={handleChange}
+                                handleSubmit={handleSubmit}
+                                disabled={loading}
+                                error={error}
+                            />
 
-                </div>
+                        </div>
                     ) : null
                 }
-                
+
 
                 <div className="list-wrapper">
                     {allList.map((list) => (
