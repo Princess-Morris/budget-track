@@ -118,7 +118,6 @@ export default function BudgetList() {
                 setChangeCardColor(undefined)
                 setListOfTimeUpdated((prev: string[]) => ([formData.id, ...prev]));
 
-
                 // setHideUpdatedText(!hideUpdatedText)
 
             } else {
@@ -138,6 +137,7 @@ export default function BudgetList() {
 
                 // setAllList(prev => ([newItem, ...prev]))
                 setAllList([newItem, ...originalList])
+                setSearchInput("")
 
                 // await fetchItems()
                 setFormData({
@@ -222,6 +222,15 @@ export default function BudgetList() {
     const handleShowForm = () => {
         setShowForm(!showForm)
         setChangeCardColor(undefined)
+        setAllList(originalList)
+        setSearchInput("")
+        setFormData({
+            id: "",
+            category: "",
+            description: "",
+            amount: 0,
+            dateTime: ""
+        })
     }
 
 
