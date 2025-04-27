@@ -1,0 +1,10 @@
+.input-search{
+    border-radius: 8px;
+    padding: 10px;
+    outline: none;
+    background-color: #f2f2f2;
+    border: 1px solid #E1E8ED;
+    width: 100%;
+    max-width: 360px;
+  }
+  

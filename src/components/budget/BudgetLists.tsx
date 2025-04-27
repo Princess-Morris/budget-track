@@ -3,6 +3,8 @@ import CreateList from "../form/CreateList";
 
 import './budget-list.css'
 import Item from "../item/Item";
+import SearchField from "../search/SearchField";
+import ShowForm from "../show-form/ShowForm";
 
 export interface listProps {
     id: string;
@@ -28,6 +30,8 @@ export default function BudgetList() {
     const [allList, setAllList] = useState<listProps[]>([]);
     const [originalList, setOriginalList] = useState<listProps[]>([]);
 
+    // const [shouldRefetch, setShouldRefresh] = useState<boolean>(false);
+
     const [formData, setFormData] = useState<listProps>({
         id: "",
         category: "",
@@ -52,6 +56,13 @@ export default function BudgetList() {
     useEffect(() => {
         fetchItems()
     }, [])
+
+    // useEffect(() => {
+    //    if (shouldRefetch){
+    //     fetchItems()
+    //     setShouldRefresh(false)
+    //    }
+    // }, [shouldRefetch])
 
 
 
@@ -135,12 +146,11 @@ export default function BudgetList() {
 
                 const newItem = await response.json()
 
-                // setAllList(prev => ([newItem, ...prev]))
-                setAllList([newItem, ...originalList])
-                // setAllList((prev) => ([newItem, ...prev]))
+                await fetchItems()
+                // setAllList([newItem, ...originalList])
+                // console.log(allList)
                 setSearchInput("")
 
-                // await fetchItems()
                 setFormData({
                     id: "",
                     category: "",
@@ -154,7 +164,7 @@ export default function BudgetList() {
                 ? err.message
                 : "Network Error"
             )
-        } finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -167,7 +177,7 @@ export default function BudgetList() {
                 method: "DELETE"
             })
 
-            if (!response.ok) { 
+            if (!response.ok) {
                 throw new Error("Failed to delete item")
             }
             setAllList(prev => prev.filter((list) => (list.id !== id)))
@@ -239,19 +249,13 @@ export default function BudgetList() {
     return (
         <>
             <div className="top-wrapper">
-
-                <button
-                    className="plus-sign"
-                    onClick={handleShowForm}>
-                    {!showForm ? "+" : "All"}
-                </button>
-                <input
-                    className="input-search"
-                    type="text"
-                    name="search"
-                    placeholder="Search with description..."
-                    value={searchInput}
-                    onChange={handleSearchChange}
+                <ShowForm
+                    handleShowForm={handleShowForm}
+                    showForm={showForm}
+                />
+                <SearchField
+                    searchInput={searchInput}
+                    handleSearchChange={handleSearchChange}
                 />
 
             </div>
