@@ -137,6 +137,7 @@ export default function BudgetList() {
 
                 // setAllList(prev => ([newItem, ...prev]))
                 setAllList([newItem, ...originalList])
+                // setAllList((prev) => ([newItem, ...prev]))
                 setSearchInput("")
 
                 // await fetchItems()
@@ -222,7 +223,8 @@ export default function BudgetList() {
     const handleShowForm = () => {
         setShowForm(!showForm)
         setChangeCardColor(undefined)
-        setAllList(originalList)
+        // setAllList(originalList)
+        fetchItems()
         setSearchInput("")
         setFormData({
             id: "",
